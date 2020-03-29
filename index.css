@@ -1,0 +1,16 @@
+.quiz {
+    text-align: center;
+
+}
+
+
+
+.mainArea {
+    margin-left: auto;
+    margin-right: auto;
+    height: 300px;
+    width: 400px;
+    background-color: aquamarine;
+    text-align: center;
+};
+
