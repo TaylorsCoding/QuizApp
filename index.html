@@ -1,4 +1,5 @@
-<!doctype html>
+<!DOCTYPE html>
+
 <html lang="en">
 
 <head>
@@ -16,16 +17,32 @@
 
         </div>
     </header>
+    <div class='score'>
+        Question:<p id='currentQ'></p>
+        Score:<p id='score'></p>
+    </div>
     <div class='mainArea'>
-        <div class="currentQuestion-and-Score"> </div>
-        <button type="button" class="startButton">
+
+        <div id='question' class="currentQuestion-and-Score">
+            <p></p>
+            <ul></ul>
+        </div>
+        <button type="button" id="startButton">
             Start
         </button>
+        <button type="button" id="submitButton"> Submit
+        </button>
+        <div id='results'></div>
+        <!--
+            below adjust as necessary run a for loop to populate all the labels with the proper verbage according to my correct 
+            answer in my STORE []
+        -->
     </div>
-
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script src="questions.js"></script>
     <script src="main.js"></script>
-    <script src="questions.js">
-    </script>
+
 </body>
 
 </html>

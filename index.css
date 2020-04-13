@@ -1,16 +1,46 @@
 .quiz {
     text-align: center;
-
+    font-size: 30px;
 }
-
-
+img {
+  height: 50px;
+  width:50px;
+}
 
 .mainArea {
     margin-left: auto;
     margin-right: auto;
     height: 300px;
     width: 400px;
-    background-color: aquamarine;
+    background-color: rgb(223, 255, 80);
     text-align: center;
-};
+    border:purple 1px solid;
+}
 
+.score {
+  text-align: center;
+  color:purple;
+  }
+
+.score p {
+  display: inline-block;
+  margin-left: 20px;
+  margin-right: 10px;
+}
+ul {
+    margin: 0px;
+    padding: 0px;
+    list-style: none;
+    text-align: left;
+}
+
+#submitButton {
+  display: none;
+  margin-right: 45px;
+}
+
+#next {
+ position: relative;
+ left: 150px;
+ bottom: -50px;
+}
