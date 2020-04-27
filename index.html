@@ -3,6 +3,7 @@
 <html lang="en">
 
 <head>
+    <meta name="viewport" content="width=device-width">
     <meta charset="utf-8">
     <title>Thinkful Quiz App</title>
     <meta name="description" content="Thinkful Quiz App">
@@ -22,22 +23,21 @@
         Score:<p id='score'></p>
     </div>
     <div class='mainArea'>
-
-        <div id='question' class="currentQuestion-and-Score">
-            <p></p>
-            <ul></ul>
-        </div>
-        <button type="button" id="startButton">
-            Start
-        </button>
-        <button type="button" id="submitButton"> Submit
-        </button>
+        <form id='mainForm'>
+            <div id='question' class="currentQuestion-and-Score">
+                <p></p>
+                <ul></ul>
+            </div>
+            <button type="button" id="startButton">
+                Start
+            </button>
+            <button type="submit" id="submitButton"> Submit
+            </button>
+        </form>
         <div id='results'></div>
-        <!--
-            below adjust as necessary run a for loop to populate all the labels with the proper verbage according to my correct 
-            answer in my STORE []
-        -->
     </div>
+    <div id='gameOver'></div>
+
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"
         integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
     <script src="questions.js"></script>

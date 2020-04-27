@@ -4,8 +4,8 @@ $(document).ready(function () {
 });
 
 
-let usedQuestions = [];
-let gotCorrect = [];
+let usedQuestions = [];//Addressing the global variables. They are empty arrays to hold the questions that have been used so I dont pull up the same question more than once.
+let gotCorrect = [];//This line is the same as above
 let currentQuestion;
 function activateStart() {
     let start = $('#startButton');
@@ -19,9 +19,7 @@ function activateStart() {
 }
 
 function getQuestion() {
-    // console.log(gotCorrect)
     $('#submitButton').show();
-
 
     let questionNumber = randomNumber()
     currentQuestion = questionNumber;
@@ -33,14 +31,17 @@ function getQuestion() {
 
     $(questionContainer).html('')
     $(answerContainer).html('')
-
+    $('.mainArea').show()
     $(questionContainer).text(question)
     $.each(choices, function (i, choice) {
 
+        //label attribute
         let choiceContent = `<li><input id='${i}' type="radio" name='choice'value='${choice}'>${choice}</input></li>`;
         $(answerContainer).append(choiceContent);
 
+
     })
+    $('form input[name="choice"]').prop("disabled", false);
     showScore();
     activateSubmit()
 }
@@ -49,7 +50,6 @@ function randomNumber() {
     let randomNumber = Math.floor(Math.random() * STORE.length);
 
     while (!saveQuestions(randomNumber)) {
-        // need to save it
         randomNumber = Math.floor(Math.random() * STORE.length);
     }
 
@@ -72,18 +72,17 @@ function saveQuestions(questionNumber) {
 
 
 function checkAnswers() {
-    let userChoice = getUserChoice();
-    let question = STORE[currentQuestion];
-    let answer = question.correctAnswer;
+    const userChoice = getUserChoice();
+    const question = STORE[currentQuestion];
+    const answer = question.correctAnswer;
 
 }
 
 function getUserChoice() {
-    let correctImg = $("#correct")
-    let incorrectImg = $("#incorrect")
+    const correctImg = $("#correct")
+    const incorrectImg = $("#incorrect")
     $('#submitButton').on("click", function () {
 
-        //have to compare similar data types (boolean,string, etc)
         if (STORE[0].correctAnswer === $("#correct"))
 
             return $("#correct");
@@ -96,19 +95,26 @@ function getUserChoice() {
 
 function activateSubmit() {
     let button = $('#submitButton');
-    // $('#submitButton').hide();
 
-    button.off().on('click', function () {
-        let userChoice = $('input[name=choice]:checked').val();
-        // console.log(userChoice);
-        // console.log (STORE[currentQuestion].correctAnswer);
+    let form = $('#mainForm')
+    form.on('submit', function (event) {
+        event.preventDefault()
+        let userChoice = $('input[name=choice]:checked', 'form').val()
+
+        disableChoices()
+
+            ;
+
+        if (typeof userChoice == 'undefined') {
+            alert("Choose an option");
+            return;
+        }
         if (userChoice === STORE[currentQuestion].correctAnswer) {
             let answerDisplay = $('#results');
             answerDisplay.empty();
             answerDisplay.append(correctImage());
             answerDisplay.append(`<p> That's correct. The correct answer is ${STORE[currentQuestion].correctAnswer}</p>`);
             gotCorrect.push(currentQuestion);
-            console.log('Correct!')
             $('#submitButton').hide();
 
         }
@@ -119,16 +125,9 @@ function activateSubmit() {
 
             answerDisplay.append(`<p>Thats wrong. The correct answer is ${STORE[currentQuestion].correctAnswer}</p>`)
 
-
-
-
-
-
-
             $('#submitButton').hide();
-
-
         }
+        $('form input[name="choice"]').prop("disabled", true);
         showScore();
         let answerDisplay = $('#results');
         answerDisplay.append('<button id="next">Next</button>');
@@ -137,7 +136,6 @@ function activateSubmit() {
             if (usedQuestions.length + 1 > STORE.length) {
                 gameOver();
             } else {
-                console.log(usedQuestions.length, STORE.length)
                 getQuestion();
             }
         })
@@ -145,6 +143,12 @@ function activateSubmit() {
 
 }
 
+function disableChoices() {
+    let choices = $('#question ul li input')
+    $.each(choices, function (i, choice) {
+        $(choice)
+    })
+}
 function correctImage() {
     return '<img src="./correct.png" id="correct" alt="Correct" height="" width="">'
 }
@@ -152,7 +156,6 @@ function correctImage() {
 function incorrectImage() {
     return '<img src="./incorrect.png" id="incorrect" alt="incorrect" height="" width="">'
 }
-//finish this
 
 
 function questionNumber() {
@@ -160,8 +163,6 @@ function questionNumber() {
 }
 
 function currentScore() {
-    // console.log(gotCorrect)
-    // console.log("got correct")
     return `${gotCorrect.length}/${STORE.length}`;
 }
 
@@ -172,17 +173,33 @@ function showScore() {
 
 function gameOver() {
     $('#score').text(currentScore());
-    $('.mainArea').empty()
-    $('.mainArea').append(`<h3>Game Over. You got a score of ${gotCorrect.length}/${STORE.length}<h3>`)
+    $('.mainArea').hide()
+    $('#gameOver').html('')
+    $('#gameOver').append(`<h3>Game Over. You got a score of ${gotCorrect.length}/${STORE.length}<h3>`)
+    $('#gameOver').append('<button id="restartButton">Restart Quiz</button>');
+    $('#gameOver').show();
+    resetScore();
+    restartGame();
+}
+function restartGame() {
+    let restart = $('#restartButton');
+    restart.on('click', function () {
+        $('#gameOver').hide();
+
+        getQuestion();
+    })
 }
 
-//below needs to be fixed
+function resetScore() {
+    usedQuestions = []
+    gotCorrect = []
+
+}
+
+
+
 function checkGame() {
-    console.log('used', usedQuestions, 'store len', STORE.length)
     if (usedQuestions.length + 1 > STORE.length) {
         gameOver()
     }
 }
-
-// `${usedQuestions.length}/${STORE.length}`
-// 1/8, 2/8, 3/8
