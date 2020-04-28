@@ -4,8 +4,8 @@ $(document).ready(function () {
 });
 
 
-let usedQuestions = [];//Addressing the global variables. They are empty arrays to hold the questions that have been used so I dont pull up the same question more than once.
-let gotCorrect = [];//This line is the same as above
+let usedQuestions = [];
+let gotCorrect = [];
 let currentQuestion;
 function activateStart() {
     let start = $('#startButton');
@@ -35,8 +35,8 @@ function getQuestion() {
     $(questionContainer).text(question)
     $.each(choices, function (i, choice) {
 
-        //label attribute
-        let choiceContent = `<li><input id='${i}' type="radio" name='choice'value='${choice}'>${choice}</input></li>`;
+        //label tag
+        let choiceContent = `<li><input id='${i}' type="radio" name='choice'value='${choice}'></input><label>${choice}</label></li>`;
         $(answerContainer).append(choiceContent);
 
 
@@ -115,6 +115,7 @@ function activateSubmit() {
             answerDisplay.append(correctImage());
             answerDisplay.append(`<p> That's correct. The correct answer is ${STORE[currentQuestion].correctAnswer}</p>`);
             gotCorrect.push(currentQuestion);
+            console.log(gotCorrect);
             $('#submitButton').hide();
 
         }
@@ -139,6 +140,7 @@ function activateSubmit() {
                 getQuestion();
             }
         })
+        form.off('submit');
     })
 
 }
